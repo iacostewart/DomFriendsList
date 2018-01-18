@@ -8,7 +8,7 @@ $(document).ready(function() {
   }).done( (data) => {
     data.forEach( (eachFriend) => {
       let name= eachFriend.firstName + " " + eachFriend.lastName;
-      let newElement = createFriend(name);
+      let newElement = createFriend(name, eachFriend.id);
       $('#friend-list').append(newElement);
     })
   }).fail( () => {
@@ -57,8 +57,8 @@ $.ajax({
     $('#friend-list').on('click', 'li', function(e) {
       $(this).remove();
     })
-    function createFriend(name) {
-      return $(`<li> ${name}</li>`).addClass('list-group-item list-group-item-action list-group-item-dark');
+    function createFriend(name, id) {
+      return $(`<li> ${name}</li>`).addClass('list-group-item list-group-item-action list-group-item-dark').attr('id', id); // added .attr('id', id); this adds a new atribute the this element In the id part. in this curent situation, its my unerstanding that the <li>${name}</li> is created when submit is cicked, its given classes by the .addclass() method. and now we are adding an ID of id
     }
   });
 

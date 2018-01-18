@@ -47,7 +47,32 @@ $(document).ready(function() {
   })
   
 
-    $("#friend-form").submit( (e) => {
+
+$("#friend-form").submit( (e) => {
+  e.preventDefault();
+let newFriend = $('#input').val();
+//split the name based on the first space we find
+let firstName = newFriend.substr(0, newFriend.indexOf(' '));
+let lastName = newFriend.substr(newFriend.indexOf(' ')+1);
+// construct the ajax request
+$.ajax({
+    url: 'http://rest.learncode.academy/api/theDude/friends',
+    type: "POST",
+    data: {
+        firstName: firstName,
+        lastName: lastName,
+        email: `${firstName}@${lastName}.com`
+    }
+
+}).done( (data) =>{
+  console.log(data);
+}).fail( () => {
+  alert('AJAX call failed, unable to post new friend');
+})
+
+
+})
+   $("#friend-form").submit( (e) => {
       e.preventDefault();
       let newFriend = $('#input').val();
       let newElement = createFriend(newFriend);
@@ -88,17 +113,17 @@ $(document).ready(function() {
 
 
 
-  $.ajax({
-   url: 'http://rest.learncode.academy/api/theDude/friends',
-  type: 'GET'
-}).done( (data) => {
-data.forEach( (eachFriend) => {
-  console.log(eachFriend.firstName + " " + eachFriend.lastName);
-})
-}).fail( () => {
-  alert('AJAX call fialed, Unable to retrive Requested DAta');
+//   $.ajax({
+//    url: 'http://rest.learncode.academy/api/theDude/friends',
+//   type: 'GET'
+// }).done( (data) => {
+// data.forEach( (eachFriend) => {
+//   console.log(eachFriend.firstName + " " + eachFriend.lastName);
+// })
+// }).fail( () => {
+//   alert('AJAX call fialed, Unable to retrive Requested DAta');
 
-})
+// })
 
 // // $.ajax({
 // //   url: 'http://rest.learncode.academy/api/theDude/friends',
@@ -109,7 +134,7 @@ data.forEach( (eachFriend) => {
 
 
 
-// })
+
 
 
 

@@ -63,12 +63,23 @@ $.ajax({
       // })
       // console.log(e.currentTarget[0].value);
    // })
+
     $('#friend-list').on('click', 'li', function(e) {
-      $(this).remove();
+      $.ajax({
+        url: `http://rest.learncode.academy/api/theDude/friends/${e.target.id}`,
+        type: 'DELETE'
+      }).done( () => {
+        $(this).remove();
+      }).fail( () => {
+        alert('AJAx call failed, unable to delete friend');
+      })
+      
     })
     function createFriend(name, id) {
       return $(`<li> ${name}</li>`).addClass('list-group-item list-group-item-action list-group-item-dark').attr('id', id); // added .attr('id', id); this adds a new atribute the this element In the id part. in this curent situation, its my unerstanding that the <li>${name}</li> is created when submit is cicked, its given classes by the .addclass() method. and now we are adding an ID of id
     }
+
+    
   })
 
 // example of ajax call request
